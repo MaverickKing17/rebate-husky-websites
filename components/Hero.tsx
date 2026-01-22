@@ -11,62 +11,107 @@ const Hero: React.FC<HeroProps> = ({ location }) => {
   };
 
   return (
-    <section className="relative pt-12 pb-20 lg:pt-24 lg:pb-32 overflow-hidden">
-      {/* Background Mesh Gradient */}
+    <section className="relative pt-20 pb-24 lg:pt-32 lg:pb-40 overflow-hidden">
+      {/* Background Image with Professional Overlay */}
       <div className="absolute inset-0 z-0">
-         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-100 rounded-full blur-[100px] opacity-70 animate-float" />
-         <div className="absolute bottom-[10%] right-[-5%] w-[40%] h-[40%] bg-orange-100 rounded-full blur-[100px] opacity-60 animate-float" style={{ animationDelay: '2s' }} />
+         <img 
+            src="https://i.ibb.co/gMH28b4T/gemini-3-pro-image-preview-a-Replace-the-current.png" 
+            alt="Husky HVAC Professional Installation" 
+            className="w-full h-full object-cover"
+         />
+         {/* Dark overlay for text readability and premium look */}
+         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-slate-900/40"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center">
           {/* Badges */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-husky-blue text-sm font-semibold border border-blue-100">
-              <ShieldCheck size={14} className="mr-1" /> Satisfaction Guaranteed
+          <div className="flex flex-wrap justify-center gap-3 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-200 text-sm font-semibold border border-blue-400/20 backdrop-blur-md">
+              <ShieldCheck size={14} className="mr-2 text-blue-400" /> Satisfaction Guaranteed
             </span>
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-orange-50 text-husky-orange text-sm font-semibold border border-orange-100">
-              <Star size={14} className="mr-1 fill-husky-orange" /> Since 1974
+            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-orange-500/10 text-orange-200 text-sm font-semibold border border-orange-400/20 backdrop-blur-md">
+              <Star size={14} className="mr-2 fill-orange-400 text-orange-400" /> Since 1974
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6 drop-shadow-lg tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
             <span className="text-husky-blue">{location}</span> HVAC Experts
             <br className="hidden md:block" />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400">
               Since 1974
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
             Over 50 years of keeping {location} homes comfortable. Specialized in Furnace, AC, and Heat Pump installations with maximum rebate potential.
           </p>
 
           {/* CTA Group */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
             <button 
               onClick={() => scrollTo('contact')}
-              className="w-full sm:w-auto px-8 py-4 bg-husky-blue text-white rounded-xl font-bold text-lg shadow-xl shadow-blue-500/30 hover:bg-husky-darkBlue hover:-translate-y-1 transition-all duration-300"
+              className="w-full sm:w-auto px-8 py-4 bg-husky-blue text-white rounded-xl font-bold text-lg shadow-xl shadow-blue-500/30 hover:bg-husky-darkBlue hover:-translate-y-1 transition-all duration-300 border border-transparent"
             >
               Book Repair / Quote
             </button>
             <button 
               onClick={() => scrollTo('rebates')}
-              className="w-full sm:w-auto px-8 py-4 bg-white text-husky-blue border-2 border-husky-blue rounded-xl font-bold text-lg hover:bg-blue-50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center"
+              className="w-full sm:w-auto px-8 py-4 bg-white/5 text-white border border-white/20 rounded-xl font-bold text-lg backdrop-blur-sm hover:bg-white hover:text-husky-blue hover:border-white hover:-translate-y-1 transition-all duration-300 flex items-center justify-center"
             >
               <Thermometer size={20} className="mr-2" />
               Check Rebates
             </button>
           </div>
 
-          {/* Social Proof */}
-          <div className="mt-12 flex items-center justify-center space-x-8 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            {/* Placeholders for logos (Homestars, Google, Lennox, Carrier) */}
-            <div className="font-bold text-xl flex items-center"><Star className="fill-yellow-400 text-yellow-400 mr-1"/> HomeStars</div>
-            <div className="font-bold text-xl text-slate-500">Lennox</div>
-            <div className="font-bold text-xl text-slate-500">Carrier</div>
-            <div className="font-bold text-xl text-slate-500">Google 4.9/5</div>
+          {/* Enhanced Social Proof / Trust Bar */}
+          <div className="border-t border-white/10 pt-10 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-8">Trusted By Homeowners & Industry Leaders</p>
+            
+            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+              {/* HomeStars Badge */}
+              <div className="group flex flex-col items-center cursor-default transition-all duration-300 hover:scale-105">
+                <div className="flex items-center space-x-2">
+                  <div className="bg-husky-orange p-1 rounded">
+                    <Star className="fill-white text-white w-4 h-4" />
+                  </div>
+                  <span className="text-xl font-bold text-white tracking-tight">HomeStars</span>
+                </div>
+                <div className="mt-2 flex items-center space-x-1">
+                   <span className="text-husky-orange font-bold text-sm">9.8/10</span>
+                   <span className="text-gray-500 text-xs uppercase font-medium">Rating</span>
+                </div>
+              </div>
+
+              {/* Google Badge */}
+              <div className="group flex flex-col items-center cursor-default transition-all duration-300 hover:scale-105">
+                <div className="flex items-center space-x-2">
+                  <span className="text-xl font-bold text-white tracking-tight">Google</span>
+                  <div className="flex space-x-0.5">
+                    {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />)}
+                  </div>
+                </div>
+                <div className="mt-2 text-xs font-medium text-gray-400 group-hover:text-white transition-colors">
+                  4.9/5 Average Review
+                </div>
+              </div>
+
+              {/* Divider for Desktop */}
+              <div className="hidden md:block w-px h-10 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+
+              {/* Lennox */}
+              <div className="group flex flex-col items-center opacity-70 hover:opacity-100 transition-all duration-300">
+                <span className="text-2xl font-black text-white uppercase tracking-widest font-serif">LENNOX</span>
+                <span className="text-[9px] text-gray-400 uppercase tracking-widest mt-1 group-hover:text-husky-blue transition-colors">Premier Dealer</span>
+              </div>
+
+              {/* Carrier */}
+              <div className="group flex flex-col items-center opacity-70 hover:opacity-100 transition-all duration-300">
+                <span className="text-2xl font-bold text-white italic font-sans tracking-wide">Carrier</span>
+                <span className="text-[9px] text-gray-400 uppercase tracking-widest mt-1 group-hover:text-husky-blue transition-colors">Factory Authorized</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
