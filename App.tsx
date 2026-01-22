@@ -25,7 +25,7 @@ const App: React.FC = () => {
       </main>
 
       <Footer />
-      <AIChat />
+      <AIChat location={location} />
     </div>
   );
 };
