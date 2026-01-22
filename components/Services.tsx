@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SERVICES } from '../constants';
 import { ArrowUpRight } from 'lucide-react';
 
 const Services: React.FC = () => {
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const target = entry.target as HTMLElement;
+          target.style.opacity = '1';
+          target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card').forEach((el) => {
+      observerRef.current?.observe(el);
+    });
+
+    return () => observerRef.current?.disconnect();
+  }, []);
+
   return (
     <section id="services" className="py-20 bg-slate-50 relative">
       <div className="container mx-auto px-4">
@@ -12,16 +32,20 @@ const Services: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.map((service) => (
-            <div key={service.id} className="group relative glass p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+          {SERVICES.map((service, index) => (
+            <div 
+              key={service.id} 
+              className="service-card group relative glass p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden opacity-0 translate-y-8"
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
               {/* Highlight Badge */}
               {service.highlight && (
-                <div className="absolute top-0 right-0 bg-husky-orange text-white text-xs font-bold px-3 py-1 rounded-bl-xl">
+                <div className="absolute top-0 right-0 bg-husky-orange text-white text-xs font-bold px-3 py-1 rounded-bl-xl shadow-sm">
                   {service.highlight}
                 </div>
               )}
               
-              <div className="mb-6 inline-flex p-4 rounded-xl bg-blue-50 text-husky-blue group-hover:bg-husky-blue group-hover:text-white transition-colors duration-300">
+              <div className="mb-6 inline-flex p-4 rounded-xl bg-blue-50 text-husky-blue group-hover:bg-husky-blue group-hover:text-white transition-colors duration-300 shadow-sm">
                 <service.icon size={32} />
               </div>
               
