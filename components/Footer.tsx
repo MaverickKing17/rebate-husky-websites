@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, CircleMarker, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
+import { SERVICE_AREAS } from '../constants';
 
 // Fix for default Leaflet markers in React/Webpack/ESM environments
 const fixLeafletIcon = () => {
@@ -13,13 +14,26 @@ const fixLeafletIcon = () => {
   });
 };
 
+const CITY_COORDINATES: Record<string, [number, number]> = {
+  "Toronto": [43.7000, -79.4000],
+  "Vaughan": [43.8563, -79.5085],
+  "Markham": [43.8561, -79.3370],
+  "Richmond Hill": [43.8828, -79.4403],
+  "Mississauga": [43.5890, -79.6441],
+  "Brampton": [43.7315, -79.7624],
+  "Oakville": [43.4675, -79.6877],
+  "Burlington": [43.3255, -79.7990],
+  "Aurora": [44.0065, -79.4504],
+  "Newmarket": [44.0592, -79.4613]
+};
+
 const Footer: React.FC = () => {
   useEffect(() => {
     fixLeafletIcon();
   }, []);
 
-  const position: [number, number] = [43.7967, -79.5186]; // Husky Vaughan Location
-  const serviceRadius = 25000; // 25km radius covers GTA
+  const hqPosition: [number, number] = [43.7967, -79.5186]; // Husky Vaughan Location
+  const serviceRadius = 35000; // 35km radius covers most of GTA
 
   return (
     <footer className="bg-slate-900 text-white pt-16 pb-8">
@@ -74,10 +88,9 @@ const Footer: React.FC = () => {
 
           {/* Interactive Map */}
           <div className="rounded-xl overflow-hidden h-64 bg-slate-800 relative z-0 border border-slate-700 shadow-lg">
-             {/* MapContainer is not SSR compatible in some frameworks but fine here in SPA */}
              <MapContainer 
-               center={position} 
-               zoom={10} 
+               center={hqPosition} 
+               zoom={9} 
                scrollWheelZoom={false} 
                className="h-full w-full"
                attributionControl={false}
@@ -86,22 +99,44 @@ const Footer: React.FC = () => {
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
                 />
-                <Marker position={position}>
+                
+                {/* Main Service Area Circle */}
+                <Circle 
+                  center={hqPosition} 
+                  pathOptions={{ fillColor: '#007cba', color: '#007cba', opacity: 0.4, fillOpacity: 0.1 }} 
+                  radius={serviceRadius} 
+                />
+
+                {/* HQ Marker */}
+                <Marker position={hqPosition}>
                   <Popup>
-                    <div className="text-slate-900 font-sans">
-                      <strong>Husky Heating & Air Conditioning</strong><br/>
-                      Vaughan HQ
+                    <div className="text-slate-900 font-sans text-center">
+                      <strong className="text-husky-blue">HUSKY HQ</strong><br/>
+                      Vaughan, ON
                     </div>
                   </Popup>
                 </Marker>
-                <Circle 
-                  center={position} 
-                  pathOptions={{ fillColor: '#007cba', color: '#007cba', opacity: 0.5, fillOpacity: 0.2 }} 
-                  radius={serviceRadius} 
-                />
+
+                {/* Individual Service Areas */}
+                {SERVICE_AREAS.map((city) => {
+                  const coords = CITY_COORDINATES[city];
+                  if (!coords) return null;
+                  return (
+                    <CircleMarker 
+                      key={city}
+                      center={coords}
+                      pathOptions={{ color: '#ff6900', fillColor: '#ff6900', fillOpacity: 0.6, weight: 1 }}
+                      radius={4}
+                    >
+                      <Tooltip direction="top" offset={[0, -5]} opacity={1}>
+                        <span className="font-bold text-husky-blue">{city}</span>
+                      </Tooltip>
+                    </CircleMarker>
+                  );
+                })}
              </MapContainer>
-             <div className="absolute bottom-2 right-2 z-[400] bg-white/90 px-2 py-1 rounded text-[10px] text-slate-500 pointer-events-none">
-               Service Area Highlighted
+             <div className="absolute bottom-2 right-2 z-[400] bg-white/90 px-2 py-1 rounded text-[10px] text-slate-500 pointer-events-none shadow-sm">
+               Service Areas Highlighted
              </div>
           </div>
         </div>
